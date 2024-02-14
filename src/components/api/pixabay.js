@@ -10,7 +10,7 @@ const PARAMS_API = {
   per_page: 12,
 };
 
-export async function GetFromApi(searchQuery, actualPage) {
+export async function getFromPixabay(searchQuery, actualPage) {
   const url = `${URL_API}?key=${KEY_API}&q=${searchQuery}&page=${actualPage}`;
   try {
     const response = await axios.get(`${url}`, { params: PARAMS_API });
