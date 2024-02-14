@@ -5,7 +5,7 @@ import { Modal } from './Modal/Modal.jsx';
 import { Searchbar } from './Searchbar/Searchbar.jsx';
 import { Loader } from './Loader/Loader.jsx';
 import { ButtonLoadMore } from './ButtonLoadMore/ButtonLoadMore.jsx';
-import { GetFromApi } from './GetFromApi/GetFromApi.jsx';
+import { getFromPixabay } from './api/pixabay.js';
 
 import css from './App.module.css';
 
@@ -41,7 +41,7 @@ export class App extends Component {
       prevState.actualPage !== this.state.actualPage
     ) {
       this.setState({ isLoader: true });
-      const response = await GetFromApi(
+      const response = await getFromPixabay(
         this.state.searchQuery,
         this.state.actualPage
       );
