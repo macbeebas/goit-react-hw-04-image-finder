@@ -1,50 +1,47 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import css from './Modal.module.css';
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.handleKeyDown);
+export const Modal = ({ onClose, bigPictureUrl, bigPictureTags }) => {
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
     document.body.style.overflow = 'hidden';
-  }
 
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-    document.body.style.overflow = '';
-  }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  });
 
-  handleKeyDown = e => {
-    if (e.code === 'Escape') this.props.onClose();
+  const handleKeyDown = e => {
+    if (e.code === 'Escape') onClose();
   };
 
-  handleBackdropClick = event => {
-    if (event.currentTarget === event.target) this.props.onClose();
+  const handleBackdropClick = e => {
+    if (e.currentTarget === e.target) onClose();
   };
 
-  render() {
-    const { onClose, bigPictureUrl, bigPictureTags } = this.props;
-    return (
-      <div className={css.modalOverlay} onClick={this.handleBackdropClick}>
-        <div className={css.modalPicture}>
-          <img
-            src={bigPictureUrl}
-            alt={bigPictureTags}
-            className={css.showPicture}
-          />
-          <button
-            type="button"
-            className={css.btnClose}
-            aria-label="Close button"
-            onClick={onClose}
-          >
-            <span>x</span>
-          </button>
-          {/* <div className={css.tagsBox}>{tags}</div> */}
-        </div>
+  return (
+    <div className={css.modalOverlay} onClick={handleBackdropClick}>
+      <div className={css.modalPicture}>
+        <img
+          src={bigPictureUrl}
+          alt={bigPictureTags}
+          className={css.showPicture}
+        />
+        <button
+          type="button"
+          className={css.btnClose}
+          aria-label="Close button"
+          onClick={onClose}
+        >
+          <span>x</span>
+        </button>
+        {/* <div className={css.tagsBox}>{tags}</div> */}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
